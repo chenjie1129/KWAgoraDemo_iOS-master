@@ -91,6 +91,10 @@ typedef void(^UpdateLogBlock)(NSString *log);
  */
 - (void)createUI;
 
+- (void)openStickerSetBtnOnClick;
+
+- (void)openFilterSetBtnOnClick;
+
 - (void)releaseManager;
 
 - (void)setCloseBtnEnable:(BOOL)enable;

@@ -442,6 +442,28 @@
                                             <action selector="doMuteAudioPressed:" destination="ANi-PG-kFt" eventType="touchUpInside" id="oPX-Gp-bEk"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57P-SA-GD2" userLabel="Mask Button">
+                                        <rect key="frame" x="265" y="65" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="IuP-ov-e0E"/>
+                                            <constraint firstAttribute="height" constant="50" id="rbf-bL-Yk1"/>
+                                        </constraints>
+                                        <state key="normal" image="btn_mask"/>
+                                        <connections>
+                                            <action selector="doMaskPressed:" destination="ANi-PG-kFt" eventType="touchUpInside" id="wk6-bn-fyS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVo-vh-5rf" userLabel="Filter Button">
+                                        <rect key="frame" x="320" y="65" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="tS1-LN-Zr0"/>
+                                            <constraint firstAttribute="width" constant="50" id="tnP-xP-YZk"/>
+                                        </constraints>
+                                        <state key="normal" image="btn_filter"/>
+                                        <connections>
+                                            <action selector="doFilterPressed:" destination="ANi-PG-kFt" eventType="touchUpInside" id="OrS-Jl-Hqc"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S5p-Me-BE3">
                                         <rect key="frame" x="162.5" y="10" width="50" height="50"/>
                                         <constraints>
@@ -458,13 +480,17 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Ov0-i3-HW0" secondAttribute="bottom" constant="5" id="4G7-4B-zkt"/>
                                     <constraint firstItem="anI-x7-rEk" firstAttribute="top" secondItem="S5p-Me-BE3" secondAttribute="bottom" constant="5" id="4H6-2c-9bf"/>
+                                    <constraint firstAttribute="bottom" secondItem="SVo-vh-5rf" secondAttribute="bottom" constant="5" id="7Yg-p2-Bra"/>
                                     <constraint firstItem="dab-Bc-Lua" firstAttribute="top" secondItem="anI-x7-rEk" secondAttribute="top" id="7bi-wX-ZJj"/>
+                                    <constraint firstAttribute="trailing" secondItem="SVo-vh-5rf" secondAttribute="trailing" constant="5" id="9R9-vz-Hg2"/>
                                     <constraint firstAttribute="bottom" secondItem="H58-yT-axu" secondAttribute="bottom" constant="5" id="Epc-4B-wyb"/>
                                     <constraint firstItem="S5p-Me-BE3" firstAttribute="centerX" secondItem="Ctt-vu-hG6" secondAttribute="centerX" id="FVl-Di-jvK"/>
                                     <constraint firstItem="tNw-RY-th5" firstAttribute="leading" secondItem="Ctt-vu-hG6" secondAttribute="leading" constant="5" id="K8S-Kg-HHo"/>
                                     <constraint firstItem="anI-x7-rEk" firstAttribute="centerX" secondItem="S5p-Me-BE3" secondAttribute="centerX" id="MAS-aM-ErY"/>
                                     <constraint firstItem="anI-x7-rEk" firstAttribute="leading" secondItem="H58-yT-axu" secondAttribute="trailing" constant="5" id="QDM-cv-nHH"/>
                                     <constraint firstItem="dab-Bc-Lua" firstAttribute="trailing" secondItem="anI-x7-rEk" secondAttribute="trailing" id="auW-aH-3NN"/>
+                                    <constraint firstItem="SVo-vh-5rf" firstAttribute="leading" secondItem="57P-SA-GD2" secondAttribute="trailing" constant="5" id="bhm-7e-hkO"/>
+                                    <constraint firstAttribute="bottom" secondItem="57P-SA-GD2" secondAttribute="bottom" constant="5" id="eat-PI-8oM"/>
                                     <constraint firstAttribute="bottom" secondItem="anI-x7-rEk" secondAttribute="bottom" constant="5" id="gBV-jT-26T"/>
                                     <constraint firstItem="Ov0-i3-HW0" firstAttribute="leading" secondItem="anI-x7-rEk" secondAttribute="trailing" constant="5" id="hOD-7O-Abv"/>
                                     <constraint firstAttribute="bottom" secondItem="tNw-RY-th5" secondAttribute="bottom" constant="5" id="nQa-aO-hFc"/>
@@ -621,7 +647,9 @@
     <resources>
         <image name="btn_cutaways" width="40" height="40"/>
         <image name="btn_endcall" width="40" height="40"/>
+        <image name="btn_filter" width="40" height="40"/>
         <image name="btn_keyboard_hide" width="16" height="10"/>
+        <image name="btn_mask" width="40" height="40"/>
         <image name="btn_message" width="40" height="40"/>
         <image name="btn_mute" width="40" height="40"/>
         <image name="btn_setting" width="23" height="23"/>

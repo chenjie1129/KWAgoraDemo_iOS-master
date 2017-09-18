@@ -111,7 +111,7 @@ class RoomViewController: UIViewController {
     }
     
     //MARK: filter
-    fileprivate var isFiltering = true {
+    fileprivate var isFiltering = false {
         didSet {
             guard let agoraKit = agoraKit else {
                 return
@@ -219,6 +219,16 @@ class RoomViewController: UIViewController {
     
     @IBAction func doCameraPressed(_ sender: UIButton) {
         agoraKit.switchCamera()
+    }
+    
+    @IBAction func doMaskPressed(_ sender: UIButton) {
+        AGSDKUI.openStickerSetBtnOnClick()
+        isFiltering = true
+    }
+    
+    @IBAction func doFilterPressed(_ sender: UIButton) {
+        AGSDKUI.openFilterSetBtnOnClick()
+        isFiltering = true
     }
     
     @IBAction func doSpeakerPressed(_ sender: UIButton) {

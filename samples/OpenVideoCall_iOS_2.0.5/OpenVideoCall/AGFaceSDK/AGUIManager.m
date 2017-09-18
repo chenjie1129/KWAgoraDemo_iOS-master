@@ -331,6 +331,14 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
     }
 }
 
+- (void)openStickerSetBtnOnClick {
+    [self pushmainMenuView:YES];
+}
+
+- (void)openFilterSetBtnOnClick {
+    [self pushFilterGlobalView:YES];
+}
+
 - (void)stickersLoadedComplete:(NSNotification *)noti {
     [self.stickersCollectionView reloadData];
     [self.stickersCollectionView scrollsToTop];
@@ -512,53 +520,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
         [_offPhoneBtn addGestureRecognizer:longPress];
     }
     return _offPhoneBtn;
-}
-
-/* Open the stickers and other parameters set mirror button*/
-- (UIButton *)openStickerSetBtn {
-    if (!_openStickerSetBtn) {
-        _openStickerSetBtn = [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth_AG - 50 - 55, ScreenHeight_AG - 5 - 50, 50, 50)];
-
-        [_openStickerSetBtn setImage:[UIImage imageNamed:@"btn_mask"] forState:UIControlStateNormal];
-
-        _openStickerSetBtn.titleLabel.font = [UIFont systemFontOfSize:8];
-
-        CGSize imageSize = _openStickerSetBtn.imageView.frame.size;
-        CGSize titleSize = _openStickerSetBtn.titleLabel.frame.size;
-        CGFloat totalHeight = imageSize.height + titleSize.height + 3;
-
-        _openStickerSetBtn.imageEdgeInsets =
-                UIEdgeInsetsMake(-(totalHeight - imageSize.height), 0.0, 0.0, -titleSize.width);
-        _openStickerSetBtn.titleEdgeInsets =
-                UIEdgeInsetsMake(0, -imageSize.width, -(totalHeight - titleSize.height), 0.0);
-
-        [_openStickerSetBtn addTarget:self action:@selector(openStickerSetBtnOnClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _openStickerSetBtn;
-}
-
-/* Open the filter selection menu button*/
-- (UIButton *)openFilterSetBtn {
-    if (!_openFilterSetBtn) {
-        _openFilterSetBtn =
-                [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth_AG - 50 - 5, ScreenHeight_AG - 5 - 50, 50, 50)];
-
-        [_openFilterSetBtn setImage:[UIImage imageNamed:@"btn_filter"] forState:UIControlStateNormal];
-
-        _openFilterSetBtn.titleLabel.font = [UIFont systemFontOfSize:8];
-
-        CGSize imageSize = _openFilterSetBtn.imageView.frame.size;
-        CGSize titleSize = _openFilterSetBtn.titleLabel.frame.size;
-        CGFloat totalHeight = imageSize.height + titleSize.height + 3;
-
-        _openFilterSetBtn.imageEdgeInsets =
-                UIEdgeInsetsMake(-(totalHeight - imageSize.height), 0.0, 0.0, -titleSize.width);
-        _openFilterSetBtn.titleEdgeInsets =
-                UIEdgeInsetsMake(0, -imageSize.width, -(totalHeight - titleSize.height), 0.0);
-
-        [_openFilterSetBtn addTarget:self action:@selector(openFilterSetBtnOnClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _openFilterSetBtn;
 }
 
 /* The navigation bar at the bottom of the screen */
@@ -1525,14 +1486,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
     if ([self.delegate respondsToSelector:@selector(didClickOffPhoneButton)]) {
         [self.delegate didClickOffPhoneButton];
     }
-}
-
-- (void)openStickerSetBtnOnClick:(UIButton *)sender {
-    [self pushmainMenuView:YES];
-}
-
-- (void)openFilterSetBtnOnClick:(UIButton *)sender {
-    [self pushFilterGlobalView:YES];
 }
 
 - (void)updateValue:(UISlider *)sender {

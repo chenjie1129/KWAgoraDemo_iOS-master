@@ -139,6 +139,14 @@ class LiveRoomViewController: UIViewController {
         }
     }
     
+    @IBAction func doMaskPressed(_ sender: UIButton) {
+        AGSDKUI.openStickerSetBtnOnClick()
+    }
+    
+    @IBAction func doFilterPressed(_ sender: UIButton) {
+        AGSDKUI.openFilterSetBtnOnClick()
+    }
+    
     @IBAction func doLeavePressed(_ sender: UIButton) {
         leaveChannel()
     }

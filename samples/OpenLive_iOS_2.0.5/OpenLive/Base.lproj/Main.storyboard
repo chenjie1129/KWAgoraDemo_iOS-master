@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -339,6 +340,28 @@
                                     <action selector="doMutePressed:" destination="jcF-oR-gRA" eventType="touchUpInside" id="l9z-w6-Uk7"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxt-14-1TY">
+                                <rect key="frame" x="249" y="613" width="54" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="CZf-vS-GiY"/>
+                                    <constraint firstAttribute="width" constant="54" id="q0K-79-YC4"/>
+                                </constraints>
+                                <state key="normal" image="btn_mask"/>
+                                <connections>
+                                    <action selector="doMaskPressed:" destination="jcF-oR-gRA" eventType="touchUpInside" id="Oza-2r-NiL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GKU-TZ-u0t">
+                                <rect key="frame" x="305" y="613" width="54" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="54" id="TM9-YL-h6o"/>
+                                    <constraint firstAttribute="height" constant="54" id="YQl-Q5-ioC"/>
+                                </constraints>
+                                <state key="normal" image="btn_filter"/>
+                                <connections>
+                                    <action selector="doFilterPressed:" destination="jcF-oR-gRA" eventType="touchUpInside" id="bfU-Kb-Ti6"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfg-XL-B7H">
                                 <rect key="frame" x="162.5" y="20" width="50" height="54"/>
                                 <constraints>
@@ -353,12 +376,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Slg-PP-4Jr" firstAttribute="top" secondItem="Uxt-14-1TY" secondAttribute="bottom" id="5i7-Ir-vyd"/>
+                            <constraint firstItem="Slg-PP-4Jr" firstAttribute="top" secondItem="GKU-TZ-u0t" secondAttribute="bottom" id="9fA-zU-V6n"/>
                             <constraint firstItem="jtZ-41-ZXH" firstAttribute="leading" secondItem="tjS-OE-tLx" secondAttribute="trailing" id="AQd-au-LQq"/>
                             <constraint firstItem="AUS-G6-i97" firstAttribute="leading" secondItem="uD4-xu-7ax" secondAttribute="leading" id="HsA-jE-gBk"/>
                             <constraint firstAttribute="bottom" secondItem="tjS-OE-tLx" secondAttribute="bottom" id="IM6-Vq-fL2"/>
                             <constraint firstAttribute="trailing" secondItem="dMj-UW-Quu" secondAttribute="trailing" id="R3c-3r-VCN"/>
                             <constraint firstAttribute="bottom" secondItem="Ca0-av-PZ7" secondAttribute="bottom" id="R6u-fi-SyQ"/>
                             <constraint firstItem="Ca0-av-PZ7" firstAttribute="top" secondItem="uD4-xu-7ax" secondAttribute="top" id="Yqw-HO-boS"/>
+                            <constraint firstItem="GKU-TZ-u0t" firstAttribute="leading" secondItem="Uxt-14-1TY" secondAttribute="trailing" id="Yur-8o-H1H"/>
                             <constraint firstItem="hfg-XL-B7H" firstAttribute="centerX" secondItem="uD4-xu-7ax" secondAttribute="centerX" id="aPG-P1-1F2"/>
                             <constraint firstItem="tjS-OE-tLx" firstAttribute="leading" secondItem="AUS-G6-i97" secondAttribute="trailing" id="asV-6H-jOY"/>
                             <constraint firstItem="hfg-XL-B7H" firstAttribute="top" secondItem="uD4-xu-7ax" secondAttribute="top" constant="20" id="bZw-Zv-Hvr"/>
@@ -367,6 +393,7 @@
                             <constraint firstAttribute="bottom" secondItem="AUS-G6-i97" secondAttribute="bottom" id="gII-9r-wla"/>
                             <constraint firstAttribute="trailing" secondItem="Ca0-av-PZ7" secondAttribute="trailing" id="jdA-sH-4hP"/>
                             <constraint firstItem="Ca0-av-PZ7" firstAttribute="leading" secondItem="uD4-xu-7ax" secondAttribute="leading" id="o22-Pm-Dq6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GKU-TZ-u0t" secondAttribute="trailing" id="wGm-9G-lzs"/>
                         </constraints>
                     </view>
                     <connections>
@@ -376,6 +403,8 @@
                         <outlet property="roomNameLabel" destination="hfg-XL-B7H" id="qHt-X0-M31"/>
                         <outletCollection property="sessionButtons" destination="tjS-OE-tLx" collectionClass="NSMutableArray" id="xcY-7E-98c"/>
                         <outletCollection property="sessionButtons" destination="jtZ-41-ZXH" collectionClass="NSMutableArray" id="QF9-SZ-bRS"/>
+                        <outletCollection property="sessionButtons" destination="Uxt-14-1TY" collectionClass="NSMutableArray" id="E6V-Bq-28G"/>
+                        <outletCollection property="sessionButtons" destination="GKU-TZ-u0t" collectionClass="NSMutableArray" id="eW0-LN-LbD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ugo-pc-3LG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -409,7 +438,9 @@
     </scenes>
     <resources>
         <image name="btn_close" width="30" height="30"/>
+        <image name="btn_filter" width="40" height="40"/>
         <image name="btn_join" width="40" height="40"/>
+        <image name="btn_mask" width="40" height="40"/>
         <image name="btn_mute" width="40" height="40"/>
         <image name="btn_overturn" width="40" height="40"/>
         <image name="btn_setting" width="23" height="23"/>
