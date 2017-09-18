@@ -66,16 +66,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 @property(nonatomic, assign) BOOL isHiddenCloseVideoBtn;
 
 /**
- Whether to hide the bottom left button
- */
-@property(nonatomic, assign) BOOL isHiddenStickerSetBtn;
-
-/**
- Whether to hide the bottom right button
- */
-@property(nonatomic, assign) BOOL isHiddenRightBtn;
-
-/**
  center button
  */
 @property(nonatomic, strong) UIButton *offPhoneBtn;
@@ -84,16 +74,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
  Whether to hide the center button
  */
 @property(nonatomic, assign) BOOL isHiddenOffPhoneBtn;
-
-/**
- Open the stickers and other parameters set mirror button
- */
-@property(nonatomic, strong) UIButton *openStickerSetBtn;
-
-/**
- Open the filter selection menu button
- */
-@property(nonatomic, strong) UIButton *openFilterSetBtn;
 
 /**
  The navigation bar at the bottom of the screen
@@ -290,10 +270,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 
 //        [self.superView addSubview:self.offPhoneBtn];
 
-        [self.superView addSubview:self.openStickerSetBtn];
-
-        [self.superView addSubview:self.openFilterSetBtn];
-
         [self.superView addSubview:self.beautifyFilterView];
 
         [self.superView addSubview:self.stickerMenuView];
@@ -400,29 +376,20 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
         if (!self.isHiddenOffPhoneBtn) {
             [self.offPhoneBtn setAlpha:0];
         }
-        [self.openFilterSetBtn setAlpha:0];
-        [self.openStickerSetBtn setAlpha:0];
 
         if (!self.isHiddenOffPhoneBtn) {
             [self.offPhoneBtn setHidden:isPushed];
         }
-
-        [self.openFilterSetBtn setHidden:isPushed];
-        [self.openStickerSetBtn setHidden:isPushed];
-
+        
         [UIView animateWithDuration:0.6 animations:^{
             if (!self.isHiddenOffPhoneBtn) {
                 [self.offPhoneBtn setAlpha:1];
             }
-            [self.openFilterSetBtn setAlpha:1];
-            [self.openStickerSetBtn setAlpha:1];
         }];
         [tapView setHidden:YES];
     } else {
         [tapView setHidden:NO];
         [self.offPhoneBtn setHidden:isPushed];
-        [self.openFilterSetBtn setHidden:isPushed];
-        [self.openStickerSetBtn setHidden:isPushed];
     }
 }
 
@@ -661,10 +628,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 
                     [self resetWithUI:self.offPhoneBtn frame:CGRectMake((self.renderManager.varWidth - 81) / 2, self.renderManager.varHeight - 23 - 81, 81, 81)];
 
-                    [self resetWithUI:self.openFilterSetBtn frame:CGRectMake(self.renderManager.varWidth - 38 - 44, self.renderManager.varHeight - 45 - 38, 38, 38)];
-
-                    [self resetWithUI:self.openStickerSetBtn frame:CGRectMake(41, self.renderManager.varHeight - 45 - 38, 38, 38)];
-
                     [self resetWithUI:self.mainMenuView frame:CGRectMake(0, self.renderManager.varHeight, self.renderManager.varWidth, 42)];
 
                     [self resetWithUI:self.filterGlobalView frame:CGRectMake(0, self.renderManager.varHeight, self.renderManager.varWidth, 101)];
@@ -701,10 +664,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 
                     [self resetWithUI:self.offPhoneBtn frame:CGRectMake((self.renderManager.varWidth - 81) / 2, self.renderManager.varHeight - 23 - 81, 81, 81)];
 
-                    [self resetWithUI:self.openFilterSetBtn frame:CGRectMake(self.renderManager.varWidth - 38 - 44, self.renderManager.varHeight - 45 - 38, 38, 38)];
-
-                    [self resetWithUI:self.openStickerSetBtn frame:CGRectMake(41, self.renderManager.varHeight - 45 - 38, 38, 38)];
-
                     [self resetWithUI:self.mainMenuView frame:CGRectMake(0, self.renderManager.varHeight, self.renderManager.varWidth, 42)];
 
                     [self resetWithUI:self.filterGlobalView frame:CGRectMake(0, self.renderManager.varHeight, self.renderManager.varWidth, 101)];
@@ -733,11 +692,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 
                     break;
             }
-
-            /* agora 特有偏移效果 */
-            [self setLeftBtn:CGPointMake(20, -20)];
-            [self setRightBtn:CGPointMake(-20, -20)];
-
         });
     }
 }
@@ -1807,41 +1761,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
     [self.closeVideoBtn setHidden:isHidden];
 }
 
-/*
- * 设置是否隐藏 主屏幕 内置UI 下方左边按钮 */
-- (void)setLeftBtHidden:(BOOL)isHidden {
-    self.isHiddenStickerSetBtn = isHidden;
-    [self.openStickerSetBtn setHidden:isHidden];
-}
-
-/*
- * 设置是否隐藏 主屏幕 内置UI 下方右边按钮
- */
-- (void)setRightBtnHidden:(BOOL)isHidden {
-    self.isHiddenRightBtn = isHidden;
-    [self.openFilterSetBtn setHidden:isHidden];
-}
-
-/*
- * 设置 内置UI 下方左边按钮的 坐标偏移量
- */
-- (void)setLeftBtn:(CGPoint)point {
-    CGRect frame = self.openStickerSetBtn.frame;
-    frame.origin.x = frame.origin.x + point.x;
-    frame.origin.y = frame.origin.y + point.y;
-    self.openStickerSetBtn.frame = frame;
-}
-
-/*
- * 设置 内置UI 下方右边按钮的 坐标偏移量
- */
-- (void)setRightBtn:(CGPoint)point {
-    CGRect frame = self.openFilterSetBtn.frame;
-    frame.origin.x = frame.origin.x + point.x;
-    frame.origin.y = frame.origin.y + point.y;
-    self.openFilterSetBtn.frame = frame;
-}
-
 #pragma mark -- 自定义UI参数设置 END
 
 - (void)initDefaultParams {
@@ -2291,10 +2210,6 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
     self.closeVideoBtn = nil;
 
     self.offPhoneBtn = nil;
-
-    self.openStickerSetBtn = nil;
-
-    self.openFilterSetBtn = nil;
 
     self.mainMenuView = nil;
 

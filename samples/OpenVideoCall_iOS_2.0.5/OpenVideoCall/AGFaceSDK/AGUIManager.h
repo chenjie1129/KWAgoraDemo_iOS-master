@@ -121,33 +121,6 @@ typedef void(^UpdateLogBlock)(NSString *log);
 - (void)setCloseVideoBtnHidden:(BOOL)isHidden;
 
 /**
- Set whether to hide the left button below the home screen's built-in UI
- 
- @param isHidden isHidden left button
- */
-- (void)setLeftBtHidden:(BOOL)isHidden;
-
-/**
- Set whether to hide the home screen below the built-in UI right button
- 
- @param isHidden isHidden right button
- */
-- (void)setRightBtnHidden:(BOOL)isHidden;
-
-/**
- Sets the coordinate offset of the left button below the built-in UI
- @param point pointValue
- */
-- (void)setLeftBtn:(CGPoint)point;
-
-/**
- Sets the offset of the right-hand button below the built-in UI
- 
- @param point pointValue
- */
-- (void)setRightBtn:(CGPoint)point;
-
-/**
  Determine the vertical and horizontal screen
  */
 - (void)resetScreemMode;
