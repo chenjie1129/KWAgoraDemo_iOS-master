@@ -1,169 +1,173 @@
-# Agora人脸跟踪SDK快速集成指南(iOS)
+# Agora Face Tracker SDK for iOS Quick Integration Guide 
 
-agora人脸跟踪SDK，主要功能包括：
+Agora Face Tracker SDK includes the following features：
 
-- 静态图片的人脸以及关键点位置检测
-- 68个人脸关键点的实时检测与跟踪（单人脸/多人脸）
-- 美颜、哈哈镜等实时滤镜功能
-- 趣味2D贴纸
+- 静态图片的人脸以及关键点位置检测Facial key points and face position detecting and tracking on static images
+- 68个人脸关键点的实时检测与跟踪（单人脸/多人脸）Real-time detecting and tracking of 68 key points on face ( single face /multiple faces)
+- 美颜、哈哈镜等实时滤镜功能Real-time filters, such as beautification and magic mirror
+- 趣味2D贴纸 Fun 2D stickers
 
-我们的SDK针对移动端，在算法效率、硬件占用、性能精度等方面进行了相关优化，使其适用于移动端直播，美颜相机，滤镜相机，趣味贴纸，虚拟美妆等应用场景。
+我们的SDK针对移动端，在算法效率、硬件占用、性能精度等方面进行了相关优化，使其适用于移动端直播，美颜相机，滤镜相机，趣味贴纸，虚拟美妆等应用场景。Optimized for hardware occupancy, performance precision and efficiency of algorithm, the SDK can be used for live streaming on mobile devices, providing features like beautification camera, filter camera, fun stickers and simulation makeup, etc. 
 
-## 流程图
+## 流程图Flow Diagram
 
 ![](images/IOSpixelbuffer.png)
 
-这个文档将演示如何利用我们的demo快速入门，并详细描述具体集成步骤。
+这个文档将演示如何利用我们的demo快速入门，并详细描述具体集成步骤。The following sections describe how to integrate the demo into your application, with some specific steps provided to help you use the demo. 
 
-## Demo快速入门
+## Demo Quick Start Guide 
 
-该demo基于agora推流，实现了在直播的场景下实现人脸跟踪以及趣味贴纸。
+该demo基于agora推流，实现了在直播的场景下实现人脸跟踪以及趣味贴纸。This demo implements face tracking and fun sticker features in a live broadcasting scenario based on Agora push stream. 
 
-#### 准备环境
+#### 准备环境 Environment Preparation
 
-###### 开发环境要求
+###### 开发环境要求 Requirements
 
-  软件
-    * XCode 6.0 或以上版本
-    * iOS 7.0 或以上版本
+  Software
+    * XCode 6.0 or later
+    * iOS 7.0 or later
 
-  硬件
-    * 支持语音/视频的真机设备
+  Hardware
+    * Real mobile devices with voice and video functions
 
 
-#### 编译代码示例
+#### 编译代码示例Complied Code Samples
 
-1. 用XCode打开demo工程文件(OpenLive)。代码包含以下目录结构
+1. Open the demo project file OpenLive in XCode. The following picture demonstrates an example of the directory structure:
 
   ![](images/ios-project.jpg)
 
-2. 选中项目，点击 "Build and Run" 按钮进行编译
+2. Select the project and click "Build and Run" to compile codes. The following pictures show an example of the result.  
 
   示例截图
 
 ![](images/31.pic_hd.jpg) | ![](images/33.pic_hd.jpg) |
 
-p.s. 该示例只支持在真机上实现功能，不支持模拟器。编译完成后，即可运行。
+Note: The operation in this example only supports real devices and not simulators.
+
+编译完成后，即可运行。Run the demo when compilation completes.
 
 
-## 具体集成步骤
+## 具体集成步骤 Integration Steps
 
 
-#### 第一步：准备环境
+#### Step 1: Prepare for the compilation environment
 
-软件
-  * XCode 6.0 或以上版本
-  * iOS 7.0 或以上版本
+  Software
+    * XCode 6.0 or later
+    * iOS 7.0 or later
 
-硬件
-  * 支持语音/视频的真机设备
-
-
-#### 第二步：项目所需库
-
-  - __agora提供__（请从sdk文件夹中获取）
-    * libfaceTrackerSDK.a（人脸捕捉SDK）
-    * libAGSDK.a（UI＋视频帧渲染SDK）
+  Hardware
+    * Real mobile devices with voice and video functions
 
 
-  - __自行下载__（若项目中已经存在则不需要下载）
+#### Step 2: Add libraries 
 
-    必选：
-    * GPUImage视频渲染基于GPUImage SDK（使用GPUImage短视频录制必须使用Demo中的GPUImage SDK）
+  - __Provided by Agora__（obtained from SDK files）
+    * libfaceTrackerSDK.a（the Face Tracker SDK）
+    * libAGSDK.a（UI＋video rendering SDK）
+
+
+  - __Download files__（you can skip this step if the files already exist in the project）
+
+    Must have：
+    *  	GPUImage video rendering with GPUImage SDK（使用GPUImage短视频录制必须使用Demo中的GPUImage SDK）
   	https://github.com/BradLarson/GPUImage.git
     * opencv3.framework
   	https://sourceforge.net/projects/opencvlibrary/files/opencv-ios/3.0.0/
 
-    可选：
-    * libyuv (sdk视频帧的渲染暂时只支持NV21格式的传入，如果应用视频帧是YUV或者其他视频流类型，需要导入视频流格式的转换类)
+    Optional：
+    * libyuv (sdk视频帧的渲染暂时只支持NV21格式的传入，如果应用视频帧是YUV或者其他视频流类型，需要导入视频流格式的转换类(Currently the SDK video rendering only supports NV21 format. Import video stream conversion class if video frame is YUV or any other video streaming type)
     https://github.com/lemenkov/libyuv.git
 
 
-  - __系统库__ （xcode自带）
+  - __System Library__ （included in xcode）
     * UIKit.framework
     * Foundation.framework
     * libz.tbd
 
-#### 第三步：导入工程
+#### 第三步：导入工程Step 3: Import project 
 
-1. 直接将AGFaceSDK文件夹拖入项目中即可,选择Create groups.(SDK中自带GPUimage.a,使用GPUImage短视频录制必须使用Demo中的GPUImage.a,其他则不需要)
+1. 直接将AGFaceSDK文件夹拖入项目中即可,选择Create groups.(SDK中自带GPUimage.a,使用GPUImage短视频录制必须使用Demo中的GPUImage.a,其他则不需要) Drag the AGFaceSDK folder to the project, and select "Create Groups" (Note: Use the GPUImage.a included in the demo if you need GPUImage short video recording. Otherwise you won't need these library files.  )
 
-2. 导入opencv3.framework
+2.  Import opencv3.framework
 
-  注意，从官网下载的包有可能被错误的命名为opencv2.framework。
+  注意，从官网下载的包有可能被错误的命名为opencv2.framework。Note: SDK downloaded from official website might be named as opencv2.framework by mistake.
 
-#### 第四步：贴纸配置
+#### Step 4: Configure stickers 
 
-  如果有需要，请配置贴纸。贴纸相关资源文件存放在stickers目录下，一套贴纸对应一个目录，每套贴纸包含一个config.json文件，其中配置了音效文件名及每个item参数等信息。其结构如下：
+  如果有需要，请配置贴纸。贴纸相关资源文件存放在stickers目录下，一套贴纸对应一个目录，每套贴纸包含一个config.json文件，其中配置了音效文件名及每个item参数等信息。其结构如下：Configure stickers if necessary. Sticker files are in the stickers folder with each sticker set under one directory, and config.json is included in every set of sticker files. The sticker file includes audio file, item parameter and some other information. See below for a sample structure: 
 
   ```
-  |--[sticker_1] （贴纸1）
-  |   |--config.json （贴纸配置文件）
-  |   |--[audio]（音频文件）
-  |   |--[item_1]（贴纸序列图文件夹1）
-  |   |   |--[frame_1]（贴纸序列图1）
-  |   |   |--[frame_2]（贴纸序列图2）
+  |--[sticker_1] （Sticker 1）
+  |   |--config.json （Sticker configuration file）
+  |   |--[audio]（Audio file）
+  |   |--[item_1]（Sticker item folder 1）
+  |   |   |--[frame_1]（Sticker frame 1）
+  |   |   |--[frame_2]（Sticker frame 2）
   |   |   |--...
-  |   |   |--[frame_n]（贴纸序列图n）
+  |   |   |--[frame_n]（Sticker frame n）
   |   |--[item_2]（贴纸序列图文件夹2）
   |   |--...
-  |   |--[item_n]（贴纸序列图文件夹n）
-  |--[sticker_2]（贴纸2）
+  |   |--[item_n]（Sticker folder n）
+  |--[sticker_2]（Sticker 2）
   |--...
-  |--[sticker_n]（贴纸n）
-  |—stickers.json（总配置文件）
+  |--[sticker_n]（Sticker n）
+  |—stickers.json（Sticker configuration file）
   ```
-  程序靠读取在StickerManager文件夹下的stickers.json显示相应的贴纸和图标。
-  
-注意，使用贴纸云，需要在Info.plist中加入App Transport Security Settings字段，并将Allow Arbitrary Loads设置为YES。
-  __具体的json文件格式如下：__
+The application displays relevant stickers and icons by reading stickers.json under the StickerManager folder.
+
+__Note__: To use stickers cloud, add a field “App Transport Security Settings” to Info.plist, and set YES for Allow Arbitrary Loads. 
+The following tables list the parameters of a Json file: 
+
+  __The following tables list the parameters of a Json file:__
 
   stickers.json
 
-  参数名称 | 意义
-  --------|----------
-	name | 贴纸的名称（UI显示和贴纸的识别）
-	dir | 贴纸存放路径文件夹名称
-	category | 类别（贴纸类型的区分或分组）
-	thumb | 贴纸图标的文件名（与声音在同一文件夹下）
-	voiced | true（有声音）false（没有声音播放）
-	downloaded | 是否已经下载。如果没有下载，程序则可以去下载到指定目录后更改该状态
+  Parameter name | Description
+  ---------------|----------
+  name | Name of the stickers
+  dir | Name of the sticker folder
+  category | Categories of sticker types
+  thumb | File name of the sticker icon( under the same folder as voice file)
+  voiced | true: with voice     false: no voice）
+  downloaded | Indicates whether it has been downloaded or not. If not, the application can download it and then change the status here. 
 
   config.json
 
-  参数名称 | 意义
-  --------|----------
-	type | 贴纸显示的位置类型（脸部、全屏）
-	facePos | 贴纸在脸部的位置
-	scaleWidthOffset | 贴纸宽度缩放系数
-	scaleHeightOffset | 贴纸高度缩放系数
-	scaleXOffset | 贴纸在脸部水平方向偏移系数
-	scaleYOffset | 贴纸在脸部垂直方向偏移系数
-	alignPos | 边缘item参数
-	alignX | 边缘水平方向偏移系数
-	alignY | 边缘垂直方向系数
-	frameFolder | 贴纸资源目录（包括一组图片序列帧）
-	frameNum |  帧数（一组序列帧组成一个动画效果）
-	frameDuration | 每帧的间隔（秒）
-	frameWidth | 图片的宽
-	frameHeight | 图片的高
-	trigerType | 触发条件，默认0，始终显示
+  Parameter name | Description
+  ---------------|----------
+  type | 贴纸显示的位置类型（脸部、全屏）Types of the position the sticker will be displayed (e.g., face, full screen)
+  facePos | 贴纸在脸部的位置Where the sticker goes on the face
+  scaleWidthOffset | 贴纸宽度缩放系数Scale ratio of the sticker width
+  scaleHeightOffset | 贴纸高度缩放系数 Scale ratio of the sticker height
+  scaleXOffset | 贴纸在脸部水平方向偏移系数Offset coefficient of the sticker moving horizontally on face
+  scaleYOffset | 贴纸在脸部垂直方向偏移系数Offset coefficient of the sticker moving vertically on face
+  alignPos | 边缘item参数 Alignment item parameter
+  alignX | 边缘水平方向偏移系数Offset coefficient of the edge moving horizontally
+  alignY | 边缘垂直方向系数Offset coefficient of the edge moving vertically
+  frameFolder | 贴纸资源目录（包括一组图片序列帧）Sticker resource folder ( including a set of picture frames)
+  frameNum |  帧数（一组序列帧组成一个动画效果）Frame numbers（a set of sequence frames makes an animation） 
+  frameDuration | 每帧的间隔（秒）Interval of every frame（in second）
+  frameWidth | 图片的宽Width of image
+  frameHeight | 图片的高Height of image
+  trigerType | 触发条件，默认0，始终显示Trigger condition; by default it is set to 0; always displaying
 
-  编写config.json文件可使用我司提供的[贴纸配置网站](https://apps.kiwiapp.mobi/sticker.html)进行调试生成。
+  编写config.json文件可使用我司提供的[贴纸配置网站Sticker Configuration website](https://apps.kiwiapp.mobi/sticker.html)进行调试生成。We provide a [贴纸配置网站Sticker Configuration website](https://apps.kiwiapp.mobi/sticker.html) for you to customize and generate the config.json file.
 
-#### 第五步：滤镜配置
+#### 第五步：滤镜配置 Step 5: Configure filters
 
-如果有需要，请配置滤镜。滤镜相关资源文件存放在filter目录下，一套滤镜对应一个目录，每套滤镜包含filter.png（滤镜lookUpTable）和thumb.png（滤镜icon）文件。其结构如下：
+如果有需要，请配置滤镜。滤镜相关资源文件存放在filter目录下，一套滤镜对应一个目录，每套滤镜包含filter.png（滤镜lookUpTable）和thumb.png（滤镜icon）文件。其结构如下：Configure filters if necessary. Filter files are in the Filter folder with each filter set under one directory, and filter.png (filter lookUpTable) and thumb.png (filter icon) is included in every set of filter files. See below for a sample structure: 
 
   ```
-  |--[filter_1] （滤镜1）
-  |   |--filter.png （滤镜lookUpTable）
-  |   |--thumb.png（滤镜icon）
-  |--[filter_2]（滤镜2）
-  |   |--thumb.png（滤镜icon）
+  |--[filter_1] （filter 1）
+  |   |--filter.png （filter lookUpTable）
+  |   |--thumb.png（filter icon）
+  |--[filter_2]（filter 2）
+  |   |--thumb.png（filter icon）
   |--...
-  |--[filter_n]（滤镜n）
-  |—filters.json（滤镜配置文件）
+  |--[filter_n]（filter n）
+  |—filters.json（filter config file）
   ```
 注意：资源文件里有filter.png（lookUpTable）图片的是单层滤镜。
 
