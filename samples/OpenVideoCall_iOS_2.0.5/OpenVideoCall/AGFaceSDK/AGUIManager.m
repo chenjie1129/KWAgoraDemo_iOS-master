@@ -268,7 +268,7 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 
 //        [self.superView addSubview:self.toggleBtn];
 
-//        [self.superView addSubview:self.offPhoneBtn];
+        [self.superView addSubview:self.offPhoneBtn];
 
         [self.superView addSubview:self.beautifyFilterView];
 
@@ -380,7 +380,7 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
         if (!self.isHiddenOffPhoneBtn) {
             [self.offPhoneBtn setHidden:isPushed];
         }
-        
+
         [UIView animateWithDuration:0.6 animations:^{
             if (!self.isHiddenOffPhoneBtn) {
                 [self.offPhoneBtn setAlpha:1];
@@ -1129,6 +1129,8 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
         _NewBeautifySliderSaturation.maximumValue = 100;
 
         //饱和指定初始值
+
+
         if (![AGSaveData floatForKey:@"AGSliderSaturation"]) {
 
             _NewBeautifySliderSaturation.value = 83;

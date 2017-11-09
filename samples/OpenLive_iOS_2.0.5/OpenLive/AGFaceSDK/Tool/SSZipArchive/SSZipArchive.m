@@ -45,6 +45,9 @@
 
 
 + (BOOL)unzipFileAtPath:(NSString *)path toDestination:(NSString *)destination overwrite:(BOOL)overwrite password:(NSString *)password error:(NSError **)error delegate:(id<SSZipArchiveDelegate>)delegate {
+    BOOL success = YES;
+
+    @try {
 	// Begin opening
 	zipFile zip = unzOpen((const char*)[path UTF8String]);
 	if (zip == NULL) {
@@ -71,7 +74,6 @@
 		return NO;
 	}
 
-	BOOL success = YES;
 	int ret = 0;
 	unsigned char buffer[4096] = {0};
 	NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -296,6 +298,16 @@
 	if ([delegate respondsToSelector:@selector(zipArchiveProgressEvent:total:)]) {
 		[delegate zipArchiveProgressEvent:(NSInteger)fileSize total:(NSInteger)fileSize];
 	}
+        
+    } @catch (NSException *exception) {
+/********************************************************************************/
+//在贴纸下载未完成退出进来，频繁操作容易导致解压贴纸不完全或找不到解压文件造成崩溃，catch 防止app崩溃
+//        NSLog(@"NSException:%@ ",exception.description);
+/********************************************************************************/
+        return  NO;
+    } @finally {
+        
+    }
 
 	return success;
 }
