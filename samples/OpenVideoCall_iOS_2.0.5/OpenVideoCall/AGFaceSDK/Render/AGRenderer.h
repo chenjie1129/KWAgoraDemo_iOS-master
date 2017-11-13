@@ -99,6 +99,9 @@ typedef void(^RenderAndGetFacePointsBlock)
 
 + (int)renderInitCode;
 
+//释放渲染对象
+- (void)releaseRender;
+
 //检查表情贴纸是否正在播放
 - (BOOL)checkSmiliesSticker:(GPUImageFilter *)filter;
 

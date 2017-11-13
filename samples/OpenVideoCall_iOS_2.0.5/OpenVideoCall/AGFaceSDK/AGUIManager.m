@@ -2271,6 +2271,8 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 
     self.previewView = nil;
 
+    [[AGStickerDownloadManager sharedInstance] clearDownloadCache];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AG_STICKERSLOADED_COMPLETE" object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AG_COLORFILTERSLOADED_COMPLETE" object:nil];

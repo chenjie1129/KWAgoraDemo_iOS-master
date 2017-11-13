@@ -12,10 +12,12 @@
 #import "AGStickerManager.h"
 #import "AGConst.h"
 
-@interface AGStickerDownloader : NSObject <SSZipArchiveDelegate, NSURLSessionDelegate>
+@interface AGStickerDownloader :NSObject <SSZipArchiveDelegate,NSURLSessionDelegate>
 @property(nonatomic, strong) NSURLSession *session;
 
-@property(nonatomic, copy) void (^successedBlock)(AGSticker *, NSInteger, AGStickerDownloader *);
+@property (nonatomic, strong) NSURLSessionTask *task;
+
+@property(nonatomic, copy) void (^successedBlock)(AGSticker *, NSInteger,NSString *, AGStickerDownloader *);
 
 @property(nonatomic, copy) void (^failedBlock)(AGSticker *, NSInteger, AGStickerDownloader *);
 
@@ -27,7 +29,7 @@
 
 - (instancetype)initWithSticker:(AGSticker *)sticker url:(NSURL *)url index:(NSInteger)index;
 
-- (void)downloadSuccessed:(void (^)(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader))success failed:(void (^)(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader))failed;
+- (void)downloadSuccessed:(void (^)(AGSticker *sticker, NSInteger index,NSString *downloadPath, AGStickerDownloader *downloader))success failed:(void (^)(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader))failed;
 
 @end
 
@@ -54,20 +56,22 @@
     return _session;
 }
 
-- (void)downloadSuccessed:(void (^)(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader))success failed:(void (^)(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader))failed {
+- (void)downloadSuccessed:(void (^)(AGSticker *sticker, NSInteger index,NSString *downloadPath, AGStickerDownloader *downloader))success failed:(void (^)(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader))failed {
 
-    [[self.session downloadTaskWithURL:self.url completionHandler:^(NSURL *_Nullable location, NSURLResponse *_Nullable response, NSError *_Nullable error) {
-
+    self.task = [self.session downloadTaskWithURL:self.url completionHandler:^(NSURL *_Nullable location, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+        
         if (error) {
             failed(self.sticker, self.index, self);
         } else {
             self.successedBlock = success;
             self.failedBlock = failed;
-            // unzip
-            [SSZipArchive unzipFileAtPath:location.path toDestination:[[AGStickerManager sharedManager] getStickerPath] delegate:self];
 
+            [SSZipArchive unzipFileAtPath:location.path toDestination:[[AGStickerManager sharedManager] getStickerPath] delegate:self];
+            
         }
-    }] resume];
+    }];
+    
+    [self.task resume];
 
 }
 
@@ -91,24 +95,21 @@
     }
 }
 
-#pragma mark - Unzip complete callback
-
+//#pragma mark - Unzip complete callback
+//
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath {
     // update sticker's download config
     [[AGStickerManager sharedManager] updateConfigJSON];
 
     NSString *dir =
-            [NSString stringWithFormat:@"%@/%@/", [[AGStickerManager sharedManager] getStickerPath], self.sticker.stickerName];
+    [NSString stringWithFormat:@"%@/%@/", [[AGStickerManager sharedManager] getStickerPath], self.sticker.stickerName];
     NSURL *url = [NSURL fileURLWithPath:dir];
-
-    NSString *s =
-            [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"img.jpeg"];
 
     [AGSticker updateStickerAfterDownload:self.sticker DirectoryURL:url sucess:^(AGSticker *sucessSticker) {
 
-        self.successedBlock(sucessSticker, self.index, self);
+        self.successedBlock(sucessSticker, self.index, @"",self);
 
-    }                                fail:^(AGSticker *failSticker) {
+    }fail:^(AGSticker *failSticker) {
 
         self.failedBlock(failSticker, self.index, self);
 
@@ -116,14 +117,17 @@
 
 }
 
+
+
 @end
 
 @interface AGStickerDownloadManager ()
 
 /**
- *   操作缓冲池
+ *   下载缓冲池
  */
 @property(nonatomic, strong) NSMutableDictionary *downloadCache;
+
 
 @end
 
@@ -167,21 +171,27 @@
 
     [self.downloadCache setObject:downloader forKey:downloadUrl];
 
-    [downloader downloadSuccessed:^(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader) {
+    [downloader downloadSuccessed:^(AGSticker *sticker, NSInteger index,NSString *downloadPath, AGStickerDownloader *downloader) {
 
         [self.downloadCache removeObjectForKey:downloadUrl];
         downloader = nil;
-        success(sticker, index);
+        if (success) {
+            
+            success(sticker, index);
+        }
 
-    }                      failed:^(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader) {
+    }failed:^(AGSticker *sticker, NSInteger index, AGStickerDownloader *downloader) {
 
         [self.downloadCache removeObjectForKey:downloadUrl];
         downloader = nil;
-        failed(sticker, index);
+        if (failed) {
+            
+            failed(sticker, index);
+        }
 
     }];
-
 }
+
 
 - (void)downloadStickers:(NSArray *)stickers withAnimation:(void (^)(NSInteger index))animating successed:(void (^)(AGSticker *sticker, NSInteger index))success failed:(void (^)(AGSticker *sticker, NSInteger index))failed {
 
@@ -205,7 +215,22 @@
             });
         }
     }
+}
 
+
+- (void)clearDownloadCache {
+    
+    if (self.downloadCache.count > 0) {
+        
+        [self.downloadCache enumerateKeysAndObjectsUsingBlock:^(NSURL * downloadURL, AGStickerDownloader * downloader, BOOL * _Nonnull stop) {
+            
+            if (downloader.task.state == 0) {
+                [downloader.task cancel];
+                [self.downloadCache removeObjectForKey:downloadURL];
+                downloader = nil;
+            }
+        }];
+    }
 }
 
 

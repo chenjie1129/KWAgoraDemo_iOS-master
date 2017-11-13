@@ -1,3 +1,8 @@
+| 2017-11-13 | V2.0.6                             |
+| ---------- | ------------------------------------ |
+|            | 1.fix the live UI crash when downloading and decompressing stickers   |
+|            | 2.fix stickers not working problem while using live UI     |
+
 | 2017-8-28 | V2.0.5                             |
 | ---------- | ------------------------------------ |
 |            | 1. Optimized integration steps.                        |

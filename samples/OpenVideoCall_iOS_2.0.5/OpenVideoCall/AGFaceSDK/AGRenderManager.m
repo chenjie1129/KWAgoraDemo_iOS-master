@@ -485,6 +485,7 @@ AGRenderManager *instanceManager = nil;
     self.smiliesStickerRenderer = nil;
     self.presentStickerRenderer = nil;
     self.smallFaceBigEyeFilter = nil;
+    [self.renderer releaseRender];
     self.renderer = nil;
     instanceManager = nil;
 
