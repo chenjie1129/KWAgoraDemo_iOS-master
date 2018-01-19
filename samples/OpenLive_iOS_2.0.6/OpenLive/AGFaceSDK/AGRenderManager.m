@@ -209,7 +209,7 @@ AGRenderManager *instanceManager = nil;
 
 - (void)resetDistortionParams {
     if ([[Global sharedManager] isPixcelBufferRotateVertical]) {
-        self.smallFaceBigEyeFilter.y_scale = self.varHeight / self.varWidth;
+        self.smallFaceBigEyeFilter.y_scale = self.varHeight / self.varHeight;
 
         ((ETDistortionFilter *) self.distortionFilters[1]).y_scale = self.varHeight / self.varWidth;
         ((FatFaceDistortionFilter *) self.distortionFilters[2]).y_scale = self.varHeight / self.varWidth;
@@ -237,7 +237,7 @@ AGRenderManager *instanceManager = nil;
     switch (iDeviceOrientation) {
         case UIDeviceOrientationPortrait:
             cvMobileRotate = CV_CLOCKWISE_ROTATE_90;
-            [Global sharedManager].PIXCELBUFFER_ROTATE = AG_PIXELBUFFER_ROTATE_0;
+            [Global sharedManager].PIXCELBUFFER_ROTATE = AG_PIXELBUFFER_ROTATE_90;
             break;
             
         case UIDeviceOrientationLandscapeLeft:
@@ -247,7 +247,7 @@ AGRenderManager *instanceManager = nil;
             
         case UIDeviceOrientationLandscapeRight:
             cvMobileRotate = mirrored ? CV_CLOCKWISE_ROTATE_0 : CV_CLOCKWISE_ROTATE_180;
-            [Global sharedManager].PIXCELBUFFER_ROTATE = AG_PIXELBUFFER_ROTATE_90;
+            [Global sharedManager].PIXCELBUFFER_ROTATE = AG_PIXELBUFFER_ROTATE_0;
             break;
             
         case UIDeviceOrientationPortraitUpsideDown:
@@ -256,7 +256,8 @@ AGRenderManager *instanceManager = nil;
             break;
             
         default:
-            cvMobileRotate = CV_CLOCKWISE_ROTATE_0;
+            cvMobileRotate = CV_CLOCKWISE_ROTATE_90;
+            [Global sharedManager].PIXCELBUFFER_ROTATE = AG_PIXELBUFFER_ROTATE_90;
             break;
     }
     

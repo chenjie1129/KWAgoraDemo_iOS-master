@@ -268,7 +268,7 @@ static NSString *AGFilterCellIdentifier = @"AGFilterCellIdentifier";
 
 //        [self.superView addSubview:self.toggleBtn];
 
-        [self.superView addSubview:self.offPhoneBtn];
+//        [self.superView addSubview:self.offPhoneBtn];
 
         [self.superView addSubview:self.beautifyFilterView];
 
