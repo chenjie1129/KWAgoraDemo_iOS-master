@@ -17,34 +17,54 @@
 #import "SmallFaceBigEyeFilter.h"
 #import "Global.h"
 
-//大眼
-#define AG_NEWBEAUTY_EYEMAGNIFYING_START 0.0
-#define AG_NEWBEAUTY_EYEMAGNIFYING_END 0.15
 
-//瘦脸
-#define AG_NEWBEAUTY_CHINSLIMING_START 0.99
-#define AG_NEWBEAUTY_CHINSLIMING_END 0.95
-
-//美白
-#define AG_NEWBEAUTY_SKINWHITENING_START 0.4
-#define AG_NEWBEAUTY_SKINWHITENING_END 0.6
-
-//磨皮
-#define AG_NEWBEAUTY_BLEMISHREMOVAL_START -1.7
-#define AG_NEWBEAUTY_BLEMISHREMOVAL_END 0.4
-
-//饱和
-#define AG_NEWBEAUTY_SKINSATURATION_START 0.2
-#define AG_NEWBEAUTY_SKINSATURATION_END 1.1
-
-//粉嫩
-#define AG_NEWBEAUTY_SKINTENDERNESS_START -0.5
-#define AG_NEWBEAUTY_SKINTENDERNESS_END -0.2
 
 /**
  Video frame rendering class
  */
 @interface AGRenderer : NSObject
+
+/*
+ 大眼
+ 建议设置阈值:0.0～0.15
+ */
+@property(nonatomic, assign) float eyeMagnifyingStart;
+@property(nonatomic, assign) float eyeMagnifyingEnd;
+
+/*
+ 瘦脸
+ 建议设置阈值:0.99～0.95
+ */
+@property(nonatomic, assign) float chinSlimingStart;
+@property(nonatomic, assign) float chinSlimingEnd;
+
+/*
+ 美白
+ 建议设置阈值:0.4～0.6
+ */
+@property(nonatomic, assign) float skinWhiteningStart;
+@property(nonatomic, assign) float skinWhiteningEnd;
+
+/*
+ 磨皮
+ 建议设置阈值:-1.7～0.4
+ */
+@property(nonatomic, assign) float blemishRemovalStart;
+@property(nonatomic, assign) float blemishRemovalEnd;
+
+/*
+ 饱和
+ 建议设置阈值:0.2～1.1
+ */
+@property(nonatomic, assign) float skinSaturationStart;
+@property(nonatomic, assign) float skinSaturationEnd;
+
+/*
+ 粉嫩
+ 建议设置阈值:-0.5～-0.2
+ */
+@property(nonatomic, assign) float skinTendernessStart;
+@property(nonatomic, assign) float skinTendernessEnd;
 
 /**
  The execution block of the operation can be customized before the video frame is captured after rendering
@@ -75,13 +95,10 @@ typedef void(^RenderAndGetFacePointsBlock)
 //Whether to open the face stickers
 @property(nonatomic, assign) BOOL isEnableSmiliesSticker;
 
-
 //是否开启换脸
 @property(nonatomic, assign) BOOL isEnableAutomaticFace;
 
 @property(nonatomic, copy) RenderAndGetFacePointsBlock agRenderBlock;
-
-//@property (nonatomic,assign) NSInteger trackResultState;
 
 @property(nonatomic, assign) BOOL trackResultState;
 
@@ -99,14 +116,15 @@ typedef void(^RenderAndGetFacePointsBlock)
 
 + (int)renderInitCode;
 
-//释放渲染对象
-- (void)releaseRender;
-
 //检查表情贴纸是否正在播放
 - (BOOL)checkSmiliesSticker:(GPUImageFilter *)filter;
 
 + (float)beautyParamWithValue:(float)value type:(AG_NEWBEAUTY_TYPE)type;
 
+//释放渲染对象
+- (void)releaseRender;
+
 @end
 
 UIKIT_EXTERN NSString *const AGVerifyFailededNotification;
+
