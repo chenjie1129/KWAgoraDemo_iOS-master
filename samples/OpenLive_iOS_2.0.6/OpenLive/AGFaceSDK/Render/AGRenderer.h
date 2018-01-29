@@ -124,6 +124,7 @@ typedef void(^RenderAndGetFacePointsBlock)
 //释放渲染对象
 - (void)releaseRender;
 
+
 @end
 
 UIKIT_EXTERN NSString *const AGVerifyFailededNotification;
